@@ -9,6 +9,7 @@ socket.emit('oldWhispers', pseudo);
 document.title = pseudo + ' - ' + document.title;
 
 
+
 // Quand on soumet le formulaire
 document.getElementById('chatForm').addEventListener('submit', (e)=>{
 
@@ -39,6 +40,13 @@ document.getElementById('chatForm').addEventListener('submit', (e)=>{
 
 // On attends l'emission 'newUser' du serveur, si il est reçu on ajoute un message 
 // contenant les informations emises par le serveur, et ajoutant le user à la liste des users
+
+socket.on('error', (erreur) => {
+    var erreur2 = erreur
+    // document.getElementById("value").innerHTML = data;
+    console.log(erreur2);
+  });
+
 socket.on('newUser', (pseudo) => {
     createElementFunction('newUser', pseudo);
 });
@@ -184,16 +192,18 @@ function createChannel(newRoom) {
 }
 
 
-function _joinRoom(channel){
+function _joinRoom(){
   
     // On réinitialise les messages
     document.getElementById('msgContainer').innerHTML = "";
-
+    var channel = document.getElementById("channel").value
+    console.log(channel)
     // On émet le changement de room
     socket.emit('changeChannel', channel);
-
+    
     
 }
+
 
 
 function _createRoom(){

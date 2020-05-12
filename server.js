@@ -192,6 +192,7 @@ io.on('connection', (socket) => {
         //Si l'utilisateur est déjà dans un channel, on le stock
         var previousChannel = ''
         if(socket.channel) {
+
             previousChannel = socket.channel; 
         }
 
@@ -218,12 +219,7 @@ io.on('connection', (socket) => {
                 });
             }
             else {
-                var room = new Room();
-                room.name = socket.channel;
-                room.save();
-                
-                socket.broadcast.emit('newChannel', socket.channel);
-                socket.emit('emitChannel', {previousChannel: previousChannel, newChannel: socket.channel});
+                socket.emit('error', {erreur : "erreur"});
             }
         })
     }
